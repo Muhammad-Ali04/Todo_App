@@ -9,7 +9,10 @@ class TodoModel {
   late final String date;
 
   TodoModel(
-      {required this.title, required this.description, required this.date});
+      {required this.title,
+      required this.description,
+      required this.date,
+      required this.id});
 
   TodoModel.autoId(
       {required this.title, required this.description, required this.date});

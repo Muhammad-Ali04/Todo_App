@@ -108,14 +108,15 @@ ModelDefinition getObjectBoxModel() {
           final rootOffset = buffer.derefObject(0);
 
           final object = TodoModel(
-              title: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              description: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              date: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''))
-            ..id =
-                const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
+            title: const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 6, ''),
+            description: const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 8, ''),
+            date: const fb.StringReader(asciiOptimization: true)
+                .vTableGet(buffer, rootOffset, 10, ''),
+            id: null,
+          )..id =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
 
           return object;
         })

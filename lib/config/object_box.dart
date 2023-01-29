@@ -22,6 +22,19 @@ class ObjectBox {
     _todoModelBox.put(detail);
   }
 
+  Future<bool> editPlan(TodoModel data, int id) async {
+    var query = _todoModelBox.query(TodoModel_.id.equals(id)).build();
+    var details = await query.findFirst();
+    details = TodoModel(
+        id: id,
+        description: data.description,
+        title: data.title,
+        date: data.date);
+    _todoModelBox.put(details);
+    print(details);
+    return true;
+  }
+
   insertAllTodoModel(List<TodoModel> todoList) {
     _todoModelBox.putMany(todoList);
   }

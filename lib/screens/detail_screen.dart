@@ -21,14 +21,14 @@ class _DetailScreenState extends State<DetailScreen> {
 
   String? editdate;
   bool _date = false;
-
+  var status;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     titleController.text = widget.data.title;
     descriptionController.text = widget.data.description;
-    dateController.text = widget.data.date;
+    editdate = widget.data.date;
   }
 
   @override
@@ -51,11 +51,17 @@ class _DetailScreenState extends State<DetailScreen> {
         ),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
+            TodoModel editData = TodoModel.autoId(
+              title: titleController.text,
+              description: descriptionController.text,
+              date: editdate.toString(),
+            );
+            status = objectBox.editPlan(editData, widget.data.id as int);
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 duration: Duration(seconds: 1),
                 content: Text(
-                  'Added',
+                  'Updated',
                   style: TextStyle(
                       color: Color.fromARGB(255, 203, 194, 177),
                       fontFamily: "Ubuntu",
@@ -64,6 +70,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 backgroundColor: Color.fromARGB(255, 64, 42, 26),
               ),
             );
+            Navigator.pop(context);
           }
         },
       ),
@@ -225,12 +232,13 @@ class _DetailScreenState extends State<DetailScreen> {
                                       onSelectionChanged:
                                           (DateRangePickerSelectionChangedArgs
                                               args) {
-                                        if (args is DateTime) {
+                                        if (args.value is DateTime) {
                                           setState(() {
                                             editdate = args.value
                                                 .toString()
                                                 .substring(0, 10);
                                             _date = true;
+                                            print(editdate);
                                           });
                                         }
                                         Navigator.pop(context);
@@ -259,7 +267,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       color: Color.fromARGB(255, 64, 42, 26),
                     ),
                     margin: EdgeInsets.only(top: height * 0.02),
-                    child: Text(widget.data.date,
+                    child: Text(editdate.toString(),
                         style: TextStyle(
                             fontFamily: "Ubuntu",
                             fontSize: 18,
